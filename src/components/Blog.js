@@ -20,7 +20,7 @@ const Blog = ({ blog, addLike, removeBlog, isOwner }) => {
 
   if (shown) {
     return (
-      <div style={blogStyle}>
+      <div className='shownNote' style={blogStyle}>
         {blog.title} <button onClick={() => setShown(!shown)}>hide</button> <br></br>
         {blog.url} <br></br>
       likes {blog.likes} <button onClick={addLike}>like</button> <br></br>
@@ -31,8 +31,8 @@ const Blog = ({ blog, addLike, removeBlog, isOwner }) => {
   }
 
   return (
-    <div style={blogStyle}>
-      {blog.title} {blog.author} <button onClick={() => setShown(!shown)}>view</button>
+    <div className='simpleNote' style={blogStyle}>
+      {blog.title} {blog.author} <button className='viewButton' onClick={() => setShown(!shown)}>view</button>
     </div>
   )
 }
