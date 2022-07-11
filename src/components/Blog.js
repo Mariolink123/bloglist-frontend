@@ -22,10 +22,9 @@ const Blog = ({ blog, addLike, removeBlog, isOwner }) => {
     return (
       <div className='shownNote' style={blogStyle}>
         {blog.title} <button onClick={() => setShown(!shown)}>hide</button> <br></br>
-        {blog.url} <br></br>
-      likes {blog.likes} <button onClick={addLike}>like</button> <br></br>
+        likes {blog.likes} <button id='like-button' onClick={addLike}>like</button> <br></br>
         {blog.user && blog.user.name} <br></br>
-        {isOwner && <button onClick={handleDelete}>remove</button>}
+        {isOwner && <button id='remove-button' onClick={handleDelete}>remove</button>}
       </div>
     )
   }
