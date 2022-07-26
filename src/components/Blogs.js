@@ -1,14 +1,39 @@
 import Blog from './Blog'
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableRow,
+  Paper,
+} from '@mui/material'
 
-const Blogs = ({ blogs, addLike, removeBlog, user }) => {
+const Blogs = ({ blogs }) => {
 
-  const sortedBlogs = blogs.sort((a, b) => b.likes - a.likes)
+  const sortedBlogs = blogs.concat().sort((a, b) => b.likes - a.likes)
 
-  return <>
-    {sortedBlogs.map(blog =>
-      <Blog isOwner = {user.username === blog.user.username} removeBlog = {() => removeBlog(blog.id)} addLike = {() => addLike(blog.id)} blog = {blog} key = {blog.id}></Blog>
-    )}
-  </>
+  const textStyle = {
+    fontFamily: 'Roboto'
+  }
+
+  return (
+    <>
+      <h2 style={textStyle}>Blog List</h2>
+      <TableContainer component={Paper}>
+        <Table>
+          <TableBody>
+            {sortedBlogs.map((blog) => (
+              <TableRow key = {blog.id}>
+                <TableCell>
+                  <Blog blog={blog}/>
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
+    </>
+  )
 }
 
 export default Blogs

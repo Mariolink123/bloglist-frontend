@@ -9,10 +9,10 @@ test('renders content', () => {
     title: 'Component testing is done with react-testing-library',
     url: 'test',
     author: test,
-    likes: 10
+    likes: 10,
   }
 
-  const { container } =  render(<Blog blog={blog} />)
+  const { container } = render(<Blog blog={blog} />)
 
   const div = container.querySelector('.simpleNote')
   expect(div).toHaveTextContent(
@@ -25,13 +25,19 @@ test('clicking the button renders the url and likes', async () => {
     title: 'Component testing is done with react-testing-library',
     url: 'test.com',
     author: 'testAuthor',
-    likes: 10
+    likes: 10,
   }
 
   const mockHandler = jest.fn()
 
-  const { container } =  render(<Blog blog={blog} addLike={mockHandler} removeBlog={mockHandler} isOwner={true}  />)
-
+  const { container } = render(
+    <Blog
+      blog={blog}
+      addLike={mockHandler}
+      removeBlog={mockHandler}
+      isOwner={true}
+    />
+  )
 
   const user = userEvent.setup()
   const button = screen.getByText('view')
@@ -42,7 +48,6 @@ test('clicking the button renders the url and likes', async () => {
   expect(newUrl).toBeDefined()
   expect(newBlog).toBeDefined()
   screen.debug()
-
 })
 
 test('clicking the like button twice calls event handler twice', async () => {
@@ -50,12 +55,19 @@ test('clicking the like button twice calls event handler twice', async () => {
     title: 'Component testing is done with react-testing-library',
     url: 'test.com',
     author: 'testAuthor',
-    likes: 10
+    likes: 10,
   }
 
   const mockHandler = jest.fn()
 
-  render(<Blog blog={blog} addLike={mockHandler} removeBlog={mockHandler} isOwner={true}  />)
+  render(
+    <Blog
+      blog={blog}
+      addLike={mockHandler}
+      removeBlog={mockHandler}
+      isOwner={true}
+    />
+  )
 
   const user = userEvent.setup()
   const viewButton = screen.getByText('view')
@@ -67,5 +79,3 @@ test('clicking the like button twice calls event handler twice', async () => {
 
   expect(mockHandler.mock.calls).toHaveLength(2)
 })
-
-

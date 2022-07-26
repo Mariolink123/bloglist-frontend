@@ -15,12 +15,12 @@ test('<BlogForm /> updates parent state and calls onSubmit', async () => {
   const inputUrl = screen.getByPlaceholderText('write here blog url')
   const sendButton = screen.getByText('create')
 
-  await user.type(inputTitle, 'testing a form' )
-  await user.type(inputAuthor, 'test author' )
-  await user.type(inputUrl, 'test.com' )
+  await user.type(inputTitle, 'testing a form')
+  await user.type(inputAuthor, 'test author')
+  await user.type(inputUrl, 'test.com')
   await user.click(sendButton)
 
   expect(createBlog.mock.calls).toHaveLength(1)
-  expect(createBlog.mock.calls[0][0].title).toBe('testing a form' )
-  expect(createBlog.mock.calls[0][0].url).toBe('test.com' )
+  expect(createBlog.mock.calls[0][0].title).toBe('testing a form')
+  expect(createBlog.mock.calls[0][0].url).toBe('test.com')
 })

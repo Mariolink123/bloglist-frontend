@@ -1,18 +1,18 @@
+/* eslint-disable no-undef */
 describe('Blog app', function () {
-
   beforeEach(function () {
     cy.request('POST', 'http://localhost:3003/api/testing/reset')
 
     const user = {
       name: 'Matti Luukkainen',
       username: 'mluukkai',
-      password: 'Salainen1!'
+      password: 'Salainen1!',
     }
 
     const user2 = {
       name: 'fake',
       username: 'root',
-      password: 'Rootpassword1!'
+      password: 'Rootpassword1!',
     }
 
     cy.request('POST', 'http://localhost:3003/api/users/', user)
@@ -26,7 +26,6 @@ describe('Blog app', function () {
   })
 
   describe('Login', function () {
-
     it('succeeds with correct credentials', function () {
       cy.contains('login').click()
       cy.get('#username').type('mluukkai')
@@ -51,7 +50,6 @@ describe('Blog app', function () {
   })
 
   describe('When logged in', function () {
-
     beforeEach(function () {
       cy.login({ username: 'mluukkai', password: 'Salainen1!' })
     })
@@ -65,44 +63,59 @@ describe('Blog app', function () {
       cy.contains('a blog created by cypress')
     })
 
-    describe('and several blogs exist', function () {
-
+    describe.only('and several blogs exist', function () {
       beforeEach(function () {
-        cy.createBlog({ title: 'first blog', author: 'Robert C Martin.', url:'google.com', likes:3 })
+        console.log('got into several blogs')
+        cy.createBlog({
+          title: 'first blog',
+          author: 'Robert C Martin.',
+          url: 'google.com',
+          likes: 3,
+        })
+        console.log('created nblog')
         /*cy.createBlog({ title: 'second blog', author: 'Edgar Smith', url:'yahoo.com', likes:2 })
         cy.createBlog({ title: 'third blog', author: 'Andrew Woods', url:'amazon.com', likes:1 })*/
       })
 
       it('a blog can be liked', function () {
+        console.log('HI THE USER IS')
         cy.contains('view').click()
         cy.get('#like-button').click()
         cy.contains('likes 4')
       })
 
-      it('only the user who created a blog can delete it', function() {
+      it('only the user who created a blog can delete it', function () {
         cy.contains('view').click()
         cy.get('#remove-button').click()
         cy.get('.notification').should('contain', 'Deleted first blog')
-        cy.createBlog({ title: 'first blog', author: 'Robert C Martin.', url:'google.com', likes:3 })
+        cy.createBlog({
+          title: 'first blog',
+          author: 'Robert C Martin.',
+          url: 'google.com',
+          likes: 3,
+        })
 
         cy.login({ username: 'root', password: 'Rootpassword1!' })
         cy.get('#remove-button').should('not.exist')
       })
 
-      it.only('blogs are ordered by likes', function() {
-        cy.createBlog({ title: 'third blog', author: 'Andrew Woods', url:'amazon.com', likes:1 })
-        cy.createBlog({ title: 'second blog', author: 'Edgar Smith', url:'yahoo.com', likes:2 })
-        
+      it('blogs are ordered by likes', function () {
+        cy.createBlog({
+          title: 'third blog',
+          author: 'Andrew Woods',
+          url: 'amazon.com',
+          likes: 1,
+        })
+        cy.createBlog({
+          title: 'second blog',
+          author: 'Edgar Smith',
+          url: 'yahoo.com',
+          likes: 2,
+        })
+
         cy.get('.simpleNote').eq(0).should('contain', 'first blog')
         cy.get('.simpleNote').eq(1).should('contain', 'second blog')
-
       })
-
-
-
     })
-
-
   })
-
 })
